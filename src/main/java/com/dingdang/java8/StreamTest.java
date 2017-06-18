@@ -19,5 +19,8 @@ public class StreamTest {
 		LongStream longStream=LongStream.rangeClosed(1, 90000000);
 		long total3=longStream.parallel().reduce(0,Long::sum);
 		System.out.println(total3);
+		
+		ThreadLocal<String> tl=ThreadLocal.withInitial(()->new String("aaaa"));
+		System.out.println(tl.get());
 	}
 }
