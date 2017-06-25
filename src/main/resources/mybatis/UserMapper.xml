@@ -9,13 +9,15 @@
     <sql id="Column_list">
         id,
         name,
-        age
+        age,
+        type
     </sql>
 
     <resultMap id="userMap" type="User" >
         <id  column="id" property="id" />
         <result column="name" property="name" />
         <result column="age" property="age" />
+        <result column="type" property="type" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
     </resultMap>
 
     <select id="get"  resultMap="userMap">

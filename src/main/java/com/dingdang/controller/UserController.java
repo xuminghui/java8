@@ -13,8 +13,6 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import com.dingdang.domain.User;
 import com.dingdang.service.UserService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 @RestController  
 @RequestMapping("/user")  
@@ -59,7 +57,7 @@ public class UserController {
         return "name";  
     }  
   
-    @RequestMapping("/list/{age}/{name}")  
+ /*   @RequestMapping("/list/{age}/{name}")  
     public PageInfo<User> getUserList(@PathVariable int age,@PathVariable String name) { 
     	PageHelper.startPage(0, 2);
     	List<User> users=userService.getUsers(age,name);
@@ -75,6 +73,12 @@ public class UserController {
     	List<User> users=userService.getUsers(map);
     	System.out.println(users.size());
         return new PageInfo<User>(users);
-    }  
-  
+    }  */
+    @RequestMapping("/listMap/{age}/{name}")  
+    public List<User> getUserListByMap(@PathVariable int age,@PathVariable String name) { 
+    	Map<String,Object> map=new HashMap<>();
+    	map.put("age", 10);
+    	List<User> users=userService.getUsers(map);
+    	return users;
+    }
 }  
