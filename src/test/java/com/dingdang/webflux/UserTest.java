@@ -14,6 +14,7 @@ import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.dingdang.domain.UserForFlux;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
@@ -62,5 +63,35 @@ public class UserTest {
 				.exchange()
 				.expectStatus()
 				.isNotFound();
+	}
+	@Test
+	public void testPostUser() throws Exception {
+		UserForFlux user = new UserForFlux(1l, "user");
+		ObjectMapper om = new ObjectMapper();
+		String json = om.writeValueAsString(user);
+		List<UserForFlux> result = webTestClient.post()
+				.uri("/api/post/user")
+				.contentType(MediaType.APPLICATION_JSON)
+				.syncBody(json)
+				.exchange()
+				.returnResult(UserForFlux.class)
+				.getResponseBody()
+				.collectList()
+				.block();
+		assert result.size()==1:"error";
+		
+	}
+	@Test
+	public void testPostString() throws Exception {
+		String testString="hello world!";
+		String result = webTestClient.post()
+				.uri("/api/post/string")
+				.contentType(MediaType.APPLICATION_JSON)
+				.syncBody(testString)
+				.exchange()
+				.returnResult(String.class)
+				.getResponseBody().blockFirst();
+		assert result.equals(testString):"error";
+		
 	}
 }

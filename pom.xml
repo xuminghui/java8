@@ -83,7 +83,12 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-devtools</artifactId>
 	        <optional>true</optional>
-    </dependency>
+    	</dependency>
+    	<dependency>
+	        <groupId>io.projectreactor</groupId>
+	        <artifactId>reactor-test</artifactId>
+        	<scope>test</scope>
+      	</dependency>
 	</dependencies>
 
 	<build>
