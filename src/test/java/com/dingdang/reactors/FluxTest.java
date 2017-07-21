@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.Duration;
 
 import org.junit.Test;
-import org.reactivestreams.Publisher;
 
 import com.dingdang.service.reactor.ReactorService;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.publisher.Operators;
 import reactor.test.StepVerifier;
 
@@ -69,6 +69,12 @@ public class FluxTest {
         .hasDroppedElements()
         .hasDropped("baz")
         .hasDroppedExactly("baz", "bar");
+	}
+	@Test
+	public void test(){
+		Mono<String> a=Mono.just("1234").delaySubscription(Duration.ofSeconds(2));
+		Flux<String> b=Flux.just("22222").delaySubscription(Duration.ofSeconds(1));
+		Flux.firstEmitting(a,b).toIterable().forEach(System.out::println);
 	}
 	
 	
